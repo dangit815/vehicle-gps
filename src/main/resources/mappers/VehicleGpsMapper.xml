@@ -1,409 +1,383 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.demo.dao.VehicleGpsMapper" >
-  <resultMap id="BaseResultMap" type="com.demo.dao.entity.VehicleGps" >
-    <result column="ID" property="id" jdbcType="DECIMAL" />
-    <result column="CODE" property="code" jdbcType="VARCHAR" />
-    <result column="GPSTIME" property="gpstime" jdbcType="VARCHAR" />
-    <result column="LNG" property="lng" jdbcType="DECIMAL" />
-    <result column="LAT" property="lat" jdbcType="DECIMAL" />
-    <result column="AV" property="av" jdbcType="DECIMAL" />
-    <result column="VEO" property="veo" jdbcType="DECIMAL" />
-    <result column="DIR" property="dir" jdbcType="VARCHAR" />
-    <result column="DIS" property="dis" jdbcType="DECIMAL" />
-    <result column="OFFSETLNG" property="offsetlng" jdbcType="DECIMAL" />
-    <result column="OFFSETLAT" property="offsetlat" jdbcType="DECIMAL" />
-    <result column="MOL0" property="mol0" jdbcType="DECIMAL" />
-    <result column="MOL1" property="mol1" jdbcType="DECIMAL" />
-    <result column="XHQD" property="xhqd" jdbcType="DECIMAL" />
-    <result column="WXGS" property="wxgs" jdbcType="DECIMAL" />
-    <result column="SIM" property="sim" jdbcType="VARCHAR" />
-    <result column="STAT" property="stat" jdbcType="VARCHAR" />
-    <result column="ALARM" property="alarm" jdbcType="VARCHAR" />
-    <result column="OIL" property="oil" jdbcType="VARCHAR" />
-    <result column="CREATETIME" property="createtime" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.demo.dao.entity.VehicleGps" extends="BaseResultMap" >
-    <result column="DIMING" property="diming" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+<mapper namespace="com.demo.dao.VehicleGpsMapper">
+    <resultMap id="BaseResultMap" type="com.demo.dao.entity.VehicleGps">
+        <result column="ID" property="id" jdbcType="DECIMAL"/>
+        <result column="CODE" property="code" jdbcType="VARCHAR"/>
+        <result column="GPSTIME" property="gpstime" jdbcType="VARCHAR"/>
+        <result column="LNG" property="lng" jdbcType="DECIMAL"/>
+        <result column="LAT" property="lat" jdbcType="DECIMAL"/>
+        <result column="AV" property="av" jdbcType="DECIMAL"/>
+        <result column="VEO" property="veo" jdbcType="DECIMAL"/>
+        <result column="DIR" property="dir" jdbcType="VARCHAR"/>
+        <result column="DIS" property="dis" jdbcType="DECIMAL"/>
+        <result column="OFFSETLNG" property="offsetlng" jdbcType="DECIMAL"/>
+        <result column="OFFSETLAT" property="offsetlat" jdbcType="DECIMAL"/>
+        <result column="MOL0" property="mol0" jdbcType="DECIMAL"/>
+        <result column="MOL1" property="mol1" jdbcType="DECIMAL"/>
+        <result column="XHQD" property="xhqd" jdbcType="DECIMAL"/>
+        <result column="WXGS" property="wxgs" jdbcType="DECIMAL"/>
+        <result column="DIMING" property="diming" jdbcType="VARCHAR"/>
+        <result column="SIM" property="sim" jdbcType="VARCHAR"/>
+        <result column="STAT" property="stat" jdbcType="VARCHAR"/>
+        <result column="ALARM" property="alarm" jdbcType="VARCHAR"/>
+        <result column="OIL" property="oil" jdbcType="VARCHAR"/>
+        <result column="CREATETIME" property="createtime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     ID, CODE, GPSTIME, LNG, LAT, AV, VEO, DIR, DIS, OFFSETLNG, OFFSETLAT, MOL0, MOL1, 
-    XHQD, WXGS, SIM, STAT, ALARM, OIL, CREATETIME
+    XHQD, WXGS, DIMING, SIM, STAT, ALARM, OIL, CREATETIME
   </sql>
-  <sql id="Blob_Column_List" >
-    DIMING
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.demo.dao.entity.VehicleGpsExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from vehicle_gps
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.demo.dao.entity.VehicleGpsExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from vehicle_gps
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <delete id="deleteByExample" parameterType="com.demo.dao.entity.VehicleGpsExample" >
-    delete from vehicle_gps
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.demo.dao.entity.VehicleGps" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.demo.dao.entity.VehicleGpsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from vehicle_gps
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <delete id="deleteByExample" parameterType="com.demo.dao.entity.VehicleGpsExample">
+        delete from vehicle_gps
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.demo.dao.entity.VehicleGps">
     insert into vehicle_gps (ID, CODE, GPSTIME, 
       LNG, LAT, AV, VEO, 
       DIR, DIS, OFFSETLNG, 
       OFFSETLAT, MOL0, MOL1, 
-      XHQD, WXGS, SIM, STAT, 
-      ALARM, OIL, CREATETIME, 
-      DIMING)
+      XHQD, WXGS, DIMING, 
+      SIM, STAT, ALARM, OIL, 
+      CREATETIME)
     values (#{id,jdbcType=DECIMAL}, #{code,jdbcType=VARCHAR}, #{gpstime,jdbcType=VARCHAR}, 
       #{lng,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, #{av,jdbcType=DECIMAL}, #{veo,jdbcType=DECIMAL}, 
       #{dir,jdbcType=VARCHAR}, #{dis,jdbcType=DECIMAL}, #{offsetlng,jdbcType=DECIMAL}, 
       #{offsetlat,jdbcType=DECIMAL}, #{mol0,jdbcType=DECIMAL}, #{mol1,jdbcType=DECIMAL}, 
-      #{xhqd,jdbcType=DECIMAL}, #{wxgs,jdbcType=DECIMAL}, #{sim,jdbcType=VARCHAR}, #{stat,jdbcType=VARCHAR}, 
-      #{alarm,jdbcType=VARCHAR}, #{oil,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
-      #{diming,jdbcType=LONGVARCHAR})
+      #{xhqd,jdbcType=DECIMAL}, #{wxgs,jdbcType=DECIMAL}, #{diming,jdbcType=VARCHAR}, 
+      #{sim,jdbcType=VARCHAR}, #{stat,jdbcType=VARCHAR}, #{alarm,jdbcType=VARCHAR}, #{oil,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.demo.dao.entity.VehicleGps" >
-    insert into vehicle_gps
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        ID,
-      </if>
-      <if test="code != null" >
-        CODE,
-      </if>
-      <if test="gpstime != null" >
-        GPSTIME,
-      </if>
-      <if test="lng != null" >
-        LNG,
-      </if>
-      <if test="lat != null" >
-        LAT,
-      </if>
-      <if test="av != null" >
-        AV,
-      </if>
-      <if test="veo != null" >
-        VEO,
-      </if>
-      <if test="dir != null" >
-        DIR,
-      </if>
-      <if test="dis != null" >
-        DIS,
-      </if>
-      <if test="offsetlng != null" >
-        OFFSETLNG,
-      </if>
-      <if test="offsetlat != null" >
-        OFFSETLAT,
-      </if>
-      <if test="mol0 != null" >
-        MOL0,
-      </if>
-      <if test="mol1 != null" >
-        MOL1,
-      </if>
-      <if test="xhqd != null" >
-        XHQD,
-      </if>
-      <if test="wxgs != null" >
-        WXGS,
-      </if>
-      <if test="sim != null" >
-        SIM,
-      </if>
-      <if test="stat != null" >
-        STAT,
-      </if>
-      <if test="alarm != null" >
-        ALARM,
-      </if>
-      <if test="oil != null" >
-        OIL,
-      </if>
-      <if test="createtime != null" >
-        CREATETIME,
-      </if>
-      <if test="diming != null" >
-        DIMING,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=DECIMAL},
-      </if>
-      <if test="code != null" >
-        #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="gpstime != null" >
-        #{gpstime,jdbcType=VARCHAR},
-      </if>
-      <if test="lng != null" >
-        #{lng,jdbcType=DECIMAL},
-      </if>
-      <if test="lat != null" >
-        #{lat,jdbcType=DECIMAL},
-      </if>
-      <if test="av != null" >
-        #{av,jdbcType=DECIMAL},
-      </if>
-      <if test="veo != null" >
-        #{veo,jdbcType=DECIMAL},
-      </if>
-      <if test="dir != null" >
-        #{dir,jdbcType=VARCHAR},
-      </if>
-      <if test="dis != null" >
-        #{dis,jdbcType=DECIMAL},
-      </if>
-      <if test="offsetlng != null" >
-        #{offsetlng,jdbcType=DECIMAL},
-      </if>
-      <if test="offsetlat != null" >
-        #{offsetlat,jdbcType=DECIMAL},
-      </if>
-      <if test="mol0 != null" >
-        #{mol0,jdbcType=DECIMAL},
-      </if>
-      <if test="mol1 != null" >
-        #{mol1,jdbcType=DECIMAL},
-      </if>
-      <if test="xhqd != null" >
-        #{xhqd,jdbcType=DECIMAL},
-      </if>
-      <if test="wxgs != null" >
-        #{wxgs,jdbcType=DECIMAL},
-      </if>
-      <if test="sim != null" >
-        #{sim,jdbcType=VARCHAR},
-      </if>
-      <if test="stat != null" >
-        #{stat,jdbcType=VARCHAR},
-      </if>
-      <if test="alarm != null" >
-        #{alarm,jdbcType=VARCHAR},
-      </if>
-      <if test="oil != null" >
-        #{oil,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=VARCHAR},
-      </if>
-      <if test="diming != null" >
-        #{diming,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.demo.dao.entity.VehicleGpsExample" resultType="java.lang.Integer" >
-    select count(*) from vehicle_gps
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update vehicle_gps
-    <set >
-      <if test="record.id != null" >
-        ID = #{record.id,jdbcType=DECIMAL},
-      </if>
-      <if test="record.code != null" >
+    <insert id="insertSelective" parameterType="com.demo.dao.entity.VehicleGps">
+        insert into vehicle_gps
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="code != null">
+                CODE,
+            </if>
+            <if test="gpstime != null">
+                GPSTIME,
+            </if>
+            <if test="lng != null">
+                LNG,
+            </if>
+            <if test="lat != null">
+                LAT,
+            </if>
+            <if test="av != null">
+                AV,
+            </if>
+            <if test="veo != null">
+                VEO,
+            </if>
+            <if test="dir != null">
+                DIR,
+            </if>
+            <if test="dis != null">
+                DIS,
+            </if>
+            <if test="offsetlng != null">
+                OFFSETLNG,
+            </if>
+            <if test="offsetlat != null">
+                OFFSETLAT,
+            </if>
+            <if test="mol0 != null">
+                MOL0,
+            </if>
+            <if test="mol1 != null">
+                MOL1,
+            </if>
+            <if test="xhqd != null">
+                XHQD,
+            </if>
+            <if test="wxgs != null">
+                WXGS,
+            </if>
+            <if test="diming != null">
+                DIMING,
+            </if>
+            <if test="sim != null">
+                SIM,
+            </if>
+            <if test="stat != null">
+                STAT,
+            </if>
+            <if test="alarm != null">
+                ALARM,
+            </if>
+            <if test="oil != null">
+                OIL,
+            </if>
+            <if test="createtime != null">
+                CREATETIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=DECIMAL},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="gpstime != null">
+                #{gpstime,jdbcType=VARCHAR},
+            </if>
+            <if test="lng != null">
+                #{lng,jdbcType=DECIMAL},
+            </if>
+            <if test="lat != null">
+                #{lat,jdbcType=DECIMAL},
+            </if>
+            <if test="av != null">
+                #{av,jdbcType=DECIMAL},
+            </if>
+            <if test="veo != null">
+                #{veo,jdbcType=DECIMAL},
+            </if>
+            <if test="dir != null">
+                #{dir,jdbcType=VARCHAR},
+            </if>
+            <if test="dis != null">
+                #{dis,jdbcType=DECIMAL},
+            </if>
+            <if test="offsetlng != null">
+                #{offsetlng,jdbcType=DECIMAL},
+            </if>
+            <if test="offsetlat != null">
+                #{offsetlat,jdbcType=DECIMAL},
+            </if>
+            <if test="mol0 != null">
+                #{mol0,jdbcType=DECIMAL},
+            </if>
+            <if test="mol1 != null">
+                #{mol1,jdbcType=DECIMAL},
+            </if>
+            <if test="xhqd != null">
+                #{xhqd,jdbcType=DECIMAL},
+            </if>
+            <if test="wxgs != null">
+                #{wxgs,jdbcType=DECIMAL},
+            </if>
+            <if test="diming != null">
+                #{diming,jdbcType=VARCHAR},
+            </if>
+            <if test="sim != null">
+                #{sim,jdbcType=VARCHAR},
+            </if>
+            <if test="stat != null">
+                #{stat,jdbcType=VARCHAR},
+            </if>
+            <if test="alarm != null">
+                #{alarm,jdbcType=VARCHAR},
+            </if>
+            <if test="oil != null">
+                #{oil,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.demo.dao.entity.VehicleGpsExample" resultType="java.lang.Integer">
+        select count(*) from vehicle_gps
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update vehicle_gps
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=DECIMAL},
+            </if>
+            <if test="record.code != null">
+                CODE = #{record.code,jdbcType=VARCHAR},
+            </if>
+            <if test="record.gpstime != null">
+                GPSTIME = #{record.gpstime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.lng != null">
+                LNG = #{record.lng,jdbcType=DECIMAL},
+            </if>
+            <if test="record.lat != null">
+                LAT = #{record.lat,jdbcType=DECIMAL},
+            </if>
+            <if test="record.av != null">
+                AV = #{record.av,jdbcType=DECIMAL},
+            </if>
+            <if test="record.veo != null">
+                VEO = #{record.veo,jdbcType=DECIMAL},
+            </if>
+            <if test="record.dir != null">
+                DIR = #{record.dir,jdbcType=VARCHAR},
+            </if>
+            <if test="record.dis != null">
+                DIS = #{record.dis,jdbcType=DECIMAL},
+            </if>
+            <if test="record.offsetlng != null">
+                OFFSETLNG = #{record.offsetlng,jdbcType=DECIMAL},
+            </if>
+            <if test="record.offsetlat != null">
+                OFFSETLAT = #{record.offsetlat,jdbcType=DECIMAL},
+            </if>
+            <if test="record.mol0 != null">
+                MOL0 = #{record.mol0,jdbcType=DECIMAL},
+            </if>
+            <if test="record.mol1 != null">
+                MOL1 = #{record.mol1,jdbcType=DECIMAL},
+            </if>
+            <if test="record.xhqd != null">
+                XHQD = #{record.xhqd,jdbcType=DECIMAL},
+            </if>
+            <if test="record.wxgs != null">
+                WXGS = #{record.wxgs,jdbcType=DECIMAL},
+            </if>
+            <if test="record.diming != null">
+                DIMING = #{record.diming,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sim != null">
+                SIM = #{record.sim,jdbcType=VARCHAR},
+            </if>
+            <if test="record.stat != null">
+                STAT = #{record.stat,jdbcType=VARCHAR},
+            </if>
+            <if test="record.alarm != null">
+                ALARM = #{record.alarm,jdbcType=VARCHAR},
+            </if>
+            <if test="record.oil != null">
+                OIL = #{record.oil,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createtime != null">
+                CREATETIME = #{record.createtime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update vehicle_gps
+        set ID = #{record.id,jdbcType=DECIMAL},
         CODE = #{record.code,jdbcType=VARCHAR},
-      </if>
-      <if test="record.gpstime != null" >
         GPSTIME = #{record.gpstime,jdbcType=VARCHAR},
-      </if>
-      <if test="record.lng != null" >
         LNG = #{record.lng,jdbcType=DECIMAL},
-      </if>
-      <if test="record.lat != null" >
         LAT = #{record.lat,jdbcType=DECIMAL},
-      </if>
-      <if test="record.av != null" >
         AV = #{record.av,jdbcType=DECIMAL},
-      </if>
-      <if test="record.veo != null" >
         VEO = #{record.veo,jdbcType=DECIMAL},
-      </if>
-      <if test="record.dir != null" >
         DIR = #{record.dir,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dis != null" >
         DIS = #{record.dis,jdbcType=DECIMAL},
-      </if>
-      <if test="record.offsetlng != null" >
         OFFSETLNG = #{record.offsetlng,jdbcType=DECIMAL},
-      </if>
-      <if test="record.offsetlat != null" >
         OFFSETLAT = #{record.offsetlat,jdbcType=DECIMAL},
-      </if>
-      <if test="record.mol0 != null" >
         MOL0 = #{record.mol0,jdbcType=DECIMAL},
-      </if>
-      <if test="record.mol1 != null" >
         MOL1 = #{record.mol1,jdbcType=DECIMAL},
-      </if>
-      <if test="record.xhqd != null" >
         XHQD = #{record.xhqd,jdbcType=DECIMAL},
-      </if>
-      <if test="record.wxgs != null" >
         WXGS = #{record.wxgs,jdbcType=DECIMAL},
-      </if>
-      <if test="record.sim != null" >
+        DIMING = #{record.diming,jdbcType=VARCHAR},
         SIM = #{record.sim,jdbcType=VARCHAR},
-      </if>
-      <if test="record.stat != null" >
         STAT = #{record.stat,jdbcType=VARCHAR},
-      </if>
-      <if test="record.alarm != null" >
         ALARM = #{record.alarm,jdbcType=VARCHAR},
-      </if>
-      <if test="record.oil != null" >
         OIL = #{record.oil,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createtime != null" >
-        CREATETIME = #{record.createtime,jdbcType=VARCHAR},
-      </if>
-      <if test="record.diming != null" >
-        DIMING = #{record.diming,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update vehicle_gps
-    set ID = #{record.id,jdbcType=DECIMAL},
-      CODE = #{record.code,jdbcType=VARCHAR},
-      GPSTIME = #{record.gpstime,jdbcType=VARCHAR},
-      LNG = #{record.lng,jdbcType=DECIMAL},
-      LAT = #{record.lat,jdbcType=DECIMAL},
-      AV = #{record.av,jdbcType=DECIMAL},
-      VEO = #{record.veo,jdbcType=DECIMAL},
-      DIR = #{record.dir,jdbcType=VARCHAR},
-      DIS = #{record.dis,jdbcType=DECIMAL},
-      OFFSETLNG = #{record.offsetlng,jdbcType=DECIMAL},
-      OFFSETLAT = #{record.offsetlat,jdbcType=DECIMAL},
-      MOL0 = #{record.mol0,jdbcType=DECIMAL},
-      MOL1 = #{record.mol1,jdbcType=DECIMAL},
-      XHQD = #{record.xhqd,jdbcType=DECIMAL},
-      WXGS = #{record.wxgs,jdbcType=DECIMAL},
-      SIM = #{record.sim,jdbcType=VARCHAR},
-      STAT = #{record.stat,jdbcType=VARCHAR},
-      ALARM = #{record.alarm,jdbcType=VARCHAR},
-      OIL = #{record.oil,jdbcType=VARCHAR},
-      CREATETIME = #{record.createtime,jdbcType=VARCHAR},
-      DIMING = #{record.diming,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update vehicle_gps
-    set ID = #{record.id,jdbcType=DECIMAL},
-      CODE = #{record.code,jdbcType=VARCHAR},
-      GPSTIME = #{record.gpstime,jdbcType=VARCHAR},
-      LNG = #{record.lng,jdbcType=DECIMAL},
-      LAT = #{record.lat,jdbcType=DECIMAL},
-      AV = #{record.av,jdbcType=DECIMAL},
-      VEO = #{record.veo,jdbcType=DECIMAL},
-      DIR = #{record.dir,jdbcType=VARCHAR},
-      DIS = #{record.dis,jdbcType=DECIMAL},
-      OFFSETLNG = #{record.offsetlng,jdbcType=DECIMAL},
-      OFFSETLAT = #{record.offsetlat,jdbcType=DECIMAL},
-      MOL0 = #{record.mol0,jdbcType=DECIMAL},
-      MOL1 = #{record.mol1,jdbcType=DECIMAL},
-      XHQD = #{record.xhqd,jdbcType=DECIMAL},
-      WXGS = #{record.wxgs,jdbcType=DECIMAL},
-      SIM = #{record.sim,jdbcType=VARCHAR},
-      STAT = #{record.stat,jdbcType=VARCHAR},
-      ALARM = #{record.alarm,jdbcType=VARCHAR},
-      OIL = #{record.oil,jdbcType=VARCHAR},
-      CREATETIME = #{record.createtime,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
+        CREATETIME = #{record.createtime,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <select id="selectByDateAndDiming" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from vehicle_gps
+        WHERE 1
+        <if test="diming != null">
+            AND DIMING LIKE #{diming,jdbcType=VARCHAR}
+        </if>
+        <if test="startDate != null">
+            AND STR_TO_DATE(GPSTIME, '%Y-%m-%d %H:%i:%s') &gt;= #{startDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endDate != null">
+            AND STR_TO_DATE(GPSTIME, '%Y-%m-%d %H:%i:%s') &lt;= #{endDate,jdbcType=TIMESTAMP}
+        </if>
+        Limit 100
+    </select>
 </mapper>

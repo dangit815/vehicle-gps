@@ -40,6 +40,8 @@
         </javaClientGenerator>
 
         <table tableName="accessory"></table>
-        <table tableName="vehicle_gps"></table>
+        <table tableName="vehicle_gps">
+            <columnOverride column="DIMING" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>
     </context>
 </generatorConfiguration>
