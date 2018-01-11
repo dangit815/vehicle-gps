@@ -1035,6 +1035,76 @@ public class VehicleGpsExample {
             return (Criteria) this;
         }
 
+        public Criteria andDimingIsNull() {
+            addCriterion("DIMING is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingIsNotNull() {
+            addCriterion("DIMING is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingEqualTo(String value) {
+            addCriterion("DIMING =", value, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingNotEqualTo(String value) {
+            addCriterion("DIMING <>", value, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingGreaterThan(String value) {
+            addCriterion("DIMING >", value, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingGreaterThanOrEqualTo(String value) {
+            addCriterion("DIMING >=", value, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingLessThan(String value) {
+            addCriterion("DIMING <", value, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingLessThanOrEqualTo(String value) {
+            addCriterion("DIMING <=", value, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingLike(String value) {
+            addCriterion("DIMING like", value, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingNotLike(String value) {
+            addCriterion("DIMING not like", value, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingIn(List<String> values) {
+            addCriterion("DIMING in", values, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingNotIn(List<String> values) {
+            addCriterion("DIMING not in", values, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingBetween(String value1, String value2) {
+            addCriterion("DIMING between", value1, value2, "diming");
+            return (Criteria) this;
+        }
+
+        public Criteria andDimingNotBetween(String value1, String value2) {
+            addCriterion("DIMING not between", value1, value2, "diming");
+            return (Criteria) this;
+        }
+
         public Criteria andSimIsNull() {
             addCriterion("SIM is null");
             return (Criteria) this;

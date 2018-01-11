@@ -33,6 +33,8 @@ public class VehicleGps {
 
     private Short wxgs;
 
+    private String diming;
+
     private String sim;
 
     private String stat;
@@ -42,8 +44,6 @@ public class VehicleGps {
     private String oil;
 
     private String createtime;
-
-    private String diming;
 
     public BigDecimal getId() {
         return id;
@@ -165,6 +165,14 @@ public class VehicleGps {
         this.wxgs = wxgs;
     }
 
+    public String getDiming() {
+        return diming;
+    }
+
+    public void setDiming(String diming) {
+        this.diming = diming == null ? null : diming.trim();
+    }
+
     public String getSim() {
         return sim;
     }
@@ -205,14 +213,6 @@ public class VehicleGps {
         this.createtime = createtime == null ? null : createtime.trim();
     }
 
-    public String getDiming() {
-        return diming;
-    }
-
-    public void setDiming(String diming) {
-        this.diming = diming == null ? null : diming.trim();
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -240,12 +240,12 @@ public class VehicleGps {
             && (this.getMol1() == null ? other.getMol1() == null : this.getMol1().equals(other.getMol1()))
             && (this.getXhqd() == null ? other.getXhqd() == null : this.getXhqd().equals(other.getXhqd()))
             && (this.getWxgs() == null ? other.getWxgs() == null : this.getWxgs().equals(other.getWxgs()))
+            && (this.getDiming() == null ? other.getDiming() == null : this.getDiming().equals(other.getDiming()))
             && (this.getSim() == null ? other.getSim() == null : this.getSim().equals(other.getSim()))
             && (this.getStat() == null ? other.getStat() == null : this.getStat().equals(other.getStat()))
             && (this.getAlarm() == null ? other.getAlarm() == null : this.getAlarm().equals(other.getAlarm()))
             && (this.getOil() == null ? other.getOil() == null : this.getOil().equals(other.getOil()))
-            && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
-            && (this.getDiming() == null ? other.getDiming() == null : this.getDiming().equals(other.getDiming()));
+            && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()));
     }
 
     @Override
@@ -267,12 +267,12 @@ public class VehicleGps {
         result = prime * result + ((getMol1() == null) ? 0 : getMol1().hashCode());
         result = prime * result + ((getXhqd() == null) ? 0 : getXhqd().hashCode());
         result = prime * result + ((getWxgs() == null) ? 0 : getWxgs().hashCode());
+        result = prime * result + ((getDiming() == null) ? 0 : getDiming().hashCode());
         result = prime * result + ((getSim() == null) ? 0 : getSim().hashCode());
         result = prime * result + ((getStat() == null) ? 0 : getStat().hashCode());
         result = prime * result + ((getAlarm() == null) ? 0 : getAlarm().hashCode());
         result = prime * result + ((getOil() == null) ? 0 : getOil().hashCode());
         result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
-        result = prime * result + ((getDiming() == null) ? 0 : getDiming().hashCode());
         return result;
     }
 }
