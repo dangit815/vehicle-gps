@@ -3,6 +3,7 @@ package com.demo.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.demo.dao.entity.VehicleGps;
+import com.demo.dto.input.SpeedParam;
 import com.demo.dto.input.TransportParam;
 import com.demo.service.VehicleGpsService;
 import com.demo.utils.BaiduMapUtil;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,6 +42,21 @@ public class VehicleGpsController {
             endDate = sdf.parse(transportParam.getEndDate());
         }
         List<VehicleGps> vehicleGpses = vehicleGpsService.listVehicleGps(transportParam.getAddress(), startDate, endDate);
+        return vehicleGpses;
+    }
+
+    @RequestMapping(value = "/speed/list.do")
+    @ResponseBody
+    public Object listVehicleGpsByAddressAndSpeed(SpeedParam speedParam) throws ParseException {
+        Date startDate = null;
+        Date endDate = null;
+        if (speedParam.getStartTime() != null) {
+            startDate = new Date(speedParam.getStartTime());
+        }
+        if (speedParam.getEndTime() != null) {
+            endDate = new Date(speedParam.getEndTime());
+        }
+        List<VehicleGps> vehicleGpses = vehicleGpsService.listVehicleGps(null, startDate, endDate);
         return vehicleGpses;
     }
 }

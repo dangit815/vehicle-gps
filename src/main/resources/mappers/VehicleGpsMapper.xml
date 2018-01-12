@@ -378,6 +378,6 @@
         <if test="endDate != null">
             AND STR_TO_DATE(GPSTIME, '%Y-%m-%d %H:%i:%s') &lt;= #{endDate,jdbcType=TIMESTAMP}
         </if>
-        Limit 100
+        Limit 200
     </select>
 </mapper>
