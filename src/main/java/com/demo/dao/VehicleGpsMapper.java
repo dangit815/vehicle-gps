@@ -8,18 +8,20 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-public interface VehicleGpsMapper {
-    int countByExample(VehicleGpsExample example);
+    public interface VehicleGpsMapper {
+        int countByExample(VehicleGpsExample example);
 
-    int deleteByExample(VehicleGpsExample example);
+        int deleteByExample(VehicleGpsExample example);
 
-    int insert(VehicleGps record);
+        int insert(VehicleGps record);
 
-    int insertSelective(VehicleGps record);
+        int insertSelective(VehicleGps record);
 
-    List<VehicleGps> selectByExample(VehicleGpsExample example);
+        List<VehicleGps> selectByExample(VehicleGpsExample example);
 
-    List<VehicleGps> selectByDateAndDiming(Map<String, Object> params);
+        List<VehicleGps> selectByDateAndDiming(Map<String, Object> params);
+
+        List<VehicleGps> selectByCODE(Map<String, Object> params);
 
     List<VehicleGps> selectByVeo(Map<String, Object> params);
 

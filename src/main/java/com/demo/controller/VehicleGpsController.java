@@ -42,6 +42,14 @@ public class VehicleGpsController {
         return vehicleGpses;
     }
 
+
+    @RequestMapping(value = "/linesbmap/list.do")
+    @ResponseBody
+    public Object listVehicleGpsByCODE(String code) throws Exception {
+        List<List<Map<String, List<BigDecimal>>>> vehicleGpses = vehicleGpsService.listVehicleGpsByCODE(code);
+        return vehicleGpses;
+    }
+
     @RequestMapping(value = "/speed/list.do")
     @ResponseBody
     public Object listVehicleGpsByAddressAndSpeed(SpeedParam speedParam) throws ParseException {
