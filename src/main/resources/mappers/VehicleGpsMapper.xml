@@ -378,7 +378,7 @@
         <if test="endDate != null">
             AND STR_TO_DATE(GPSTIME, '%Y-%m-%d %H:%i:%s') &lt;= #{endDate,jdbcType=TIMESTAMP}
         </if>
-        Limit 500
+        Limit 5000
     </select>
     <select id="selectByVeo" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
