@@ -40,4 +40,12 @@ public class VehicleGpsServiceImpl implements VehicleGpsService {
         }
         return vehicleGpsMapper.selectByVeo(params);
     }
+
+    public List<VehicleGps> listVehicleGps(String gpstime) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        if (gpstime != null) {
+            params.put("gpstime", gpstime);
+        }
+        return vehicleGpsMapper.selectByGpstime(params);
+    }
 }

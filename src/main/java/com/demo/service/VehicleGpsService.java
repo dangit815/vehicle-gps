@@ -12,4 +12,6 @@ public interface VehicleGpsService {
     List<VehicleGps> listVehicleGps(String address, Date startDate, Date endDate);
 
     List<VehicleGps> listVehicleGps(Integer speedLimit);
+
+    List<VehicleGps> listVehicleGps(String gpstime);
 }

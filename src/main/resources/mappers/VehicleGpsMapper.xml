@@ -393,4 +393,17 @@
         </if>
         Limit 10000
     </select>
+    <select id="selectByGpstime" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from vehicle_gps
+        WHERE 1
+        <if test="gpstime != null">
+            AND GPSTIME LIKE #{gpstime,jdbcType=VARCHAR}
+        </if>
+        Limit 100
+    </select>
 </mapper>

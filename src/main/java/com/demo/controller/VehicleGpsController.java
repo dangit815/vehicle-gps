@@ -59,7 +59,7 @@ public class VehicleGpsController {
 
     @RequestMapping(value = "/overspeed/list.do")
     @ResponseBody
-    public Object listHistorySpeed(SpeedParam speedParam) throws ParseException {
+    public Object listOverSpeed(SpeedParam speedParam) throws ParseException {
         List<VehicleGps> vehicleGpses = vehicleGpsService.listVehicleGps(speedParam.getSpeedLimit());
         List<OverspeedDto> overspeedDtos = new ArrayList<OverspeedDto>();
         for (VehicleGps vehicleGps : vehicleGpses) {
@@ -73,4 +73,25 @@ public class VehicleGpsController {
         }
         return overspeedDtos;
     }
+
+//    @RequestMapping(value = "/history/list.do")
+//    @ResponseBody
+//    public Object listHistoryOverSpeed(Integer type) throws ParseException {
+//        List<VehicleGps> vehicleGpses = null;
+//        switch (type) {
+//            case 1:
+//                vehicleGpses = vehicleGpsService.listVehicleGps("2016%");
+//                break;
+//            case 2:
+//                for (int i = 0; i < 4; i++) {
+//                    vehicleGpses = vehicleGpsService.listVehicleGps("2016");
+//                }
+//            case 3:
+//                for (int i = 1; i <= 12; i++) {
+//                    vehicleGpses = vehicleGpsService.listVehicleGps("2016-%" + i + '%');
+//                }
+//        }
+//return null;
+////        return overspeedDtos;
+//    }
 }
