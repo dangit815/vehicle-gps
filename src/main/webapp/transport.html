@@ -185,7 +185,7 @@
                 <li><a href="./transport.html"><span class="glyphicon glyphicon-home"></span>运力分布</a></li>
                 <li><a href="./speed.html"><span class="glyphicon glyphicon-file"></span>车辆速度监控</a></li>
                 <li><a href="./fruit.html"><span class="glyphicon glyphicon-tree-deciduous"></span> 水果检测</a></li>
-                <li class="active"><a href="./flower.html"><span class="glyphicon glyphicon-picture"></span> 花朵检测</a>
+                <li class="active"><a href="./alarm.html"><span class="glyphicon glyphicon-picture"></span> 花朵检测</a>
                 </li>
             </ul>
         </div>
@@ -478,12 +478,12 @@
                                 address: address,
                                 startDate: $('#startDate').val(),
                                 endDate: $('#endDate').val()
-                            },
-                            datatype: "json",
-                            success: function (data, stats) {
-                                if (stats == "success") {
-                                    var result = JSON.parse(htmlobj.responseText);
-                                    vehicle_stats = [];
+                                },
+                                datatype: "json",
+                                    success: function (data, stats) {
+                                    if (stats == "success") {
+                                        var result = JSON.parse(htmlobj.responseText);
+                                        vehicle_stats = [];
                                     vehicle_datas = [];
                                     for (var i in result) {
                                         create_vehicle_stats(result[i].stat);
