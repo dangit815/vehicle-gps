@@ -2,14 +2,14 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-    <classPathEntry location="/Users/zhaogx/Desktop/mysql-connector-java-5.1.44-bin.jar"/>
+    <classPathEntry location="/Users/cjl/Desktop/mysql-connector-java-5.1.44-bin.jar"/>
 
     <context id="mysql">
         <!--<plugin type="com.sliansoft.ninghai.page.MySQLPaginationPlugin"/>-->
         <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
         <plugin type="org.mybatis.generator.plugins.MapperConfigPlugin">
             <property name="fileName" value="sqlMapConfig.xml"/>
-            <!-- 			<property name="targetPackage" value="com.mybatis.msDb.mapconfig" /> -->
+            <!-- 			<property name="targetPaccjlkage" value="com.mybatis.msDb.mapconfig" /> -->
             <property name="targetProject" value="src/main/java"/>
         </plugin>
 
@@ -20,8 +20,8 @@
 
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/gps_db?characterEncoding=utf8"
-                        userId="root" password="zhaoshiwei"/>
+                        connectionURL="jdbc:mysql://localhost:3306/data_visualization?characterEncoding=utf8"
+                        userId="root" password="root"/>
 
         <javaModelGenerator targetPackage="com.demo.dao.entity"
                             targetProject="src/main/java">
@@ -43,5 +43,6 @@
         <table tableName="vehicle_gps">
             <columnOverride column="DIMING" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </table>
+        <table tableName="vehicle_notification"></table>
     </context>
 </generatorConfiguration>
