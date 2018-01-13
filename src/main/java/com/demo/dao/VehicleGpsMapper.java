@@ -23,6 +23,8 @@ import org.apache.ibatis.annotations.Param;
 
         List<VehicleGps> selectByCODE(Map<String, Object> params);
 
+    List<VehicleGps> selectByVeo(Map<String, Object> params);
+
     int updateByExampleSelective(@Param("record") VehicleGps record, @Param("example") VehicleGpsExample example);
 
     int updateByExample(@Param("record") VehicleGps record, @Param("example") VehicleGpsExample example);

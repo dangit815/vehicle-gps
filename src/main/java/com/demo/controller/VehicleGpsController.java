@@ -1,23 +1,21 @@
 package com.demo.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.demo.dao.entity.VehicleGps;
+import com.demo.dto.input.SpeedParam;
 import com.demo.dto.input.TransportParam;
+import com.demo.dto.output.OverspeedDto;
 import com.demo.service.VehicleGpsService;
-import com.demo.utils.BaiduMapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by wwwwei on 18/1/8.
@@ -44,10 +42,43 @@ public class VehicleGpsController {
         return vehicleGpses;
     }
 
+
     @RequestMapping(value = "/linesbmap/list.do")
     @ResponseBody
     public Object listVehicleGpsByCODE(String code) throws Exception {
         List<List<Map<String, List<BigDecimal>>>> vehicleGpses = vehicleGpsService.listVehicleGpsByCODE(code);
         return vehicleGpses;
+    }
+
+    @RequestMapping(value = "/speed/list.do")
+    @ResponseBody
+    public Object listVehicleGpsByAddressAndSpeed(SpeedParam speedParam) throws ParseException {
+        Date startDate = null;
+        Date endDate = null;
+        if (speedParam.getStartTime() != null) {
+            startDate = new Date(speedParam.getStartTime());
+        }
+        if (speedParam.getEndTime() != null) {
+            endDate = new Date(speedParam.getEndTime());
+        }
+        List<VehicleGps> vehicleGpses = vehicleGpsService.listVehicleGps(null, startDate, endDate);
+        return vehicleGpses;
+    }
+
+    @RequestMapping(value = "/overspeed/list.do")
+    @ResponseBody
+    public Object listHistorySpeed(SpeedParam speedParam) throws ParseException {
+        List<VehicleGps> vehicleGpses = vehicleGpsService.listVehicleGps(speedParam.getSpeedLimit());
+        List<OverspeedDto> overspeedDtos = new ArrayList<OverspeedDto>();
+        for (VehicleGps vehicleGps : vehicleGpses) {
+            OverspeedDto overspeedDto = new OverspeedDto();
+            BigDecimal[] gps = new BigDecimal[2];
+            gps[0] = vehicleGps.getLng();
+            gps[1] = vehicleGps.getLat();
+            overspeedDto.setCoord(gps);
+            overspeedDto.setElevation(vehicleGps.getVeo().subtract(new BigDecimal(speedParam.getSpeedLimit())).intValue());
+            overspeedDtos.add(overspeedDto);
+        }
+        return overspeedDtos;
     }
 }

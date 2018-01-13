@@ -14,4 +14,5 @@ public interface VehicleGpsService {
     List<VehicleGps> listVehicleGps(String address, Date startDate, Date endDate);
 
     List<List<Map<String, List<BigDecimal>>>> listVehicleGpsByCODE(String code);
+    List<VehicleGps> listVehicleGps(Integer speedLimit);
 }

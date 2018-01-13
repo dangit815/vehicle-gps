@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>车辆报警</title>
+    <!--<meta name="keywords" content="城市三级联动,行政区划,省市区,区划代码,联动插件">-->
+    <!--<meta name="description" content="一套简单实用的行政区划选择插件，结合最新的省、市、区、街道数据；独立的数据包极大地方便了插件的更新和使用。">-->
+    <link rel="shortcut icon" href="public/image/favicon.png">
+    <link rel="stylesheet" type="text/css" href="public/style/cssreset-min.css">
+    <link rel="stylesheet" type="text/css" href="public/style/common.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/fileinput.min.css"/>
+    <style type="text/css">
+        .citys {
+            margin-bottom: 10px;
+        }
+
+        .citys p {
+            line-height: 28px;
+        }
+
+        .warning {
+            color: #c00;
+        }
+
+        .main a {
+            margin-right: 8px;
+            color: #369;
+        }
+
+        .myJumbotron {
+            width: 100%;
+            text-align: center;
+            margin-top: 0;
+            background: url('img/header.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: #FFFFFF;
+            height: 100%;
+        }
+
+        .myContainer {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(82, 209, 91, 0.15);
+            line-height: 375px;
+            font-size: 45px;
+            font-weight: bold;
+        }
+
+        .navbar-default {
+            background-color: rgba(82, 209, 91, 0.15);
+        }
+
+        .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+            background-color: rgba(82, 209, 91, 0.3);
+        }
+
+        .navbar-default .navbar-nav > li > a:hover {
+            background-color: rgba(82, 209, 91, 0.15) !important;
+        }
+
+        blockquote {
+            border-left: 10px solid rgba(82, 209, 91, 0.8);
+            border-bottom: 1px solid rgba(82, 209, 91, 0.8);
+        }
+
+        blockquote span {
+            color: rgba(82, 209, 91, 0.8);
+            font-size: 22px;
+        }
+
+        .jumbotron {
+            padding-bottom: 0px;
+            margin-top: 0;
+            background-color: #FFFFFF;
+            color: #FFFFFF;
+        }
+
+        body {
+            font-family: "微软雅黑";
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            font-size: 15px;
+            border: 1px solid #FFFFFF;
+            background-color: rgba(82, 209, 91, 0.8);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            font-size: 15px;
+            border: 1px solid rgba(82, 209, 91, 0.8);
+            background-color: #FFFFFF;
+            color: rgba(82, 209, 91, 0.8);
+        }
+
+        .btn-primary:active {
+            font-size: 15px;
+            border: 1px solid rgba(82, 209, 91, 0.8);
+            background-color: #FFFFFF;
+            color: rgba(82, 209, 91, 0.8);
+        }
+
+        .btn-warning {
+            font-size: 15px;
+            width: 100%;
+            border: 1px solid #FFFFFF;
+            background-color: #f0ad4e;
+            color: #FFFFFF;
+        }
+
+        .btn-warning:hover {
+            font-size: 15px;
+            border: 1px solid #f0ad4e;
+            background-color: #FFFFFF;
+            color: #f0ad4e;
+        }
+
+        .navbar a {
+            font-family: "微软雅黑";
+            /*font-size: 15px;*/
+            color: white;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .navbar a:link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar a:visited {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            color: white;
+            text-decoration: none;
+            font-weight: bolder;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover {
+            font-weight: bolder;
+            background-color: #2E619F;
+        }
+
+        label {
+            margin-top: 5px;
+        }
+
+        a:hover {
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .mytable {
+            font-size: smaller;
+        }
+    </style>
+    <script type="text/javascript" src="public/script/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="code/jquery.citys.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript"
+            src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=6YujcgA9pfkl6Nhomeog50p9lGsegzQG"></script>
+    <script type="text/javascript"
+            src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand"><span
+                    class="glyphicon glyphicon-education"></span></a>
+            <a class="navbar-brand">一洲货运GPS车辆数据分析系统</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./transport.html"><span class="glyphicon glyphicon-home"></span>运力分布</a></li>
+                <li><a href="./speed.html"><span class="glyphicon glyphicon-file"></span>车辆速度监控</a></li>
+                <li><a href="./overspeed.html"><span class="glyphicon glyphicon-tree-deciduous"></span>
+                    超速区域</a></li>
+                <li class="active"><a href="./alarm.html"><span class="glyphicon glyphicon-picture"></span>车辆报警</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="header">
+    <div class="myJumbotron">
+        <div class="myContainer">
+            一洲货运GPS车辆数据分析系统
+        </div>
+    </div>
+</div>
+<div class="jumbotron">
+    <div class="container">
+        <blockquote>
+            <span>车辆报警</span>
+        </blockquote>
+        <div class="col-md-12">
+            <div class="alert alert-warning">
+                <table>
+                    <tr>
+                        <td width="20%" valign="middle" rowspan="2">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                            <strong>Tips</strong>
+                        </td>
+                        <td> 由于数据量巨大,查询时间较长,请耐心等待</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12">&nbsp;</div>
+        <div style="width:100%;height: 600px">
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">您有一条新的报警通知</h4>
+                        </div>
+                        <div class="modal-body">
+                            您有一辆车辆处于报警情况，点击确定查看详情
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" onclick="myrefresh()">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-bordered mytable">
+                <thead>
+                <tr>
+                    <th>NID</th>
+                    <th>ID</th>
+                    <th>CODE</th>
+                    <th>GPSTIME</th>
+                    <th>LNG</th>
+                    <th>LAT</th>
+                    <th>AV</th>
+                    <th>VEO</th>
+                    <th>DIR</th>
+                    <th>DIS</th>
+                    <th>OFFSETLNG</th>
+                    <th>OFFSETLAT</th>
+                    <th>MOL0</th>
+                    <th>MOL1</th>
+                    <th>XHQD</th>
+                    <th>WXGS</th>
+                    <th>DIMING</th>
+                    <th>SIM</th>
+                    <th>STAT</th>
+                    <th>ALARM</th>
+                    <th>OIL</th>
+                    <th>CREATETIME</th>
+                </tr>
+                </thead>
+                <tbody id="tbody-result">
+                </tbody>
+            </table>
+        </div>
+
+
+        <script type="text/javascript">
+            var htmlobj = $.ajax({
+                url: "../notification/getall.do",
+                type: 'POST',
+                data: {},
+                datatype: "json",
+                success: function (data) {
+                    var result = JSON.parse(htmlobj.responseText);
+                    var str = "";
+                    var tbody = window.document.getElementById("tbody-result");
+                    for (var i in result) {
+                        str += "<tr>" +
+                                "<td>" + result[i].nid + "</td>" +
+                                "<td>" + result[i].id + "</td>" +
+                                "<td>" + result[i].code + "</td>" +
+                                "<td>" + result[i].gpstime + "</td>" +
+                                "<td>" + result[i].lng + "</td>" +
+                                "<td>" + result[i].lat + "</td>" +
+                                "<td>" + result[i].av + "</td>" +
+                                "<td>" + result[i].veo + "</td>" +
+                                "<td>" + result[i].dir + "</td>" +
+                                "<td>" + result[i].dis + "</td>" +
+                                "<td>" + result[i].offsetlng + "</td>" +
+                                "<td>" + result[i].offsetlat + "</td>" +
+                                "<td>" + result[i].mol0 + "</td>" +
+                                "<td>" + result[i].mol1 + "</td>" +
+                                "<td>" + result[i].xhqd + "</td>" +
+                                "<td>" + result[i].wxgs + "</td>" +
+                                "<td>" + result[i].diming + "</td>" +
+                                "<td>" + result[i].sim + "</td>" +
+                                "<td>" + result[i].stat + "</td>" +
+                                "<td>" + result[i].alarm + "</td>" +
+                                "<td>" + result[i].oil + "</td>" +
+                                "<td>" + result[i].createtime + "</td>" +
+                                "</tr>";
+                    }
+                    tbody.innerHTML = str;
+                },
+                error: function (data) {
+                    alert("请求失败");
+                }
+            });
+
+            setInterval("check_notify()", 5000);
+            function check_notify() {
+                $.ajax({
+                    type: "POST",
+                    url: "../notification/checknotify.do",
+                    data: {
+                        NowMaxId: $("table tr:last td:first").text()
+                    },
+                    datatype: "json",
+                    success: function (data) {
+                        var result = JSON.parse(data); //由JSON字符串转换为JSON对象
+                        if (result.msg == "success") {
+                            //alert(result.data.nid)
+                            $("#myModal").modal("show");
+                        }
+
+                    },
+                    error: function (data) {
+                        //alert("请求失败");
+                    }
+                });
+            }
+
+            function myrefresh() {
+                window.location.reload();
+            }
+
+        </script>
+    </div>
+</div>
+</div>
+</body>
+</html>

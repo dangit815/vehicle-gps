@@ -85,9 +85,9 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    ID, CODE, GPSTIME, LNG, LAT, AV, VEO, DIR, DIS, OFFSETLNG, OFFSETLAT, MOL0, MOL1, 
-    XHQD, WXGS, DIMING, SIM, STAT, ALARM, OIL, CREATETIME
-  </sql>
+        ID, CODE, GPSTIME, LNG, LAT, AV, VEO, DIR, DIS, OFFSETLNG, OFFSETLAT, MOL0, MOL1,
+        XHQD, WXGS, DIMING, SIM, STAT, ALARM, OIL, CREATETIME
+    </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.demo.dao.entity.VehicleGpsExample">
         select
         <if test="distinct">
@@ -378,7 +378,20 @@
         <if test="endDate != null">
             AND STR_TO_DATE(GPSTIME, '%Y-%m-%d %H:%i:%s') &lt;= #{endDate,jdbcType=TIMESTAMP}
         </if>
-        Limit 100
+        Limit 5000
+    </select>
+    <select id="selectByVeo" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from vehicle_gps
+        WHERE 1
+        <if test="veo != null">
+            AND VEO &gt;= #{veo,jdbcType=DECIMAL}
+        </if>
+        Limit 10000
     </select>
     <select id="selectByCODE" resultMap="BaseResultMap" parameterType="java.util.Map">
         select

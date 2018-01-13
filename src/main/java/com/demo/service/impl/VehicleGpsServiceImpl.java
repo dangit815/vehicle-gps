@@ -59,5 +59,12 @@ public class VehicleGpsServiceImpl implements VehicleGpsService {
         }
         res.add(mid);
         return res;
+
+    public List<VehicleGps> listVehicleGps(Integer speedLimit) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        if (speedLimit != null) {
+            params.put("veo", speedLimit);
+        }
+        return vehicleGpsMapper.selectByVeo(params);
     }
 }
