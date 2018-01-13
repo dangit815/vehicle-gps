@@ -21,6 +21,8 @@ public interface VehicleGpsMapper {
 
     List<VehicleGps> selectByDateAndDiming(Map<String, Object> params);
 
+    List<VehicleGps> selectByVeo(Map<String, Object> params);
+
     int updateByExampleSelective(@Param("record") VehicleGps record, @Param("example") VehicleGpsExample example);
 
     int updateByExample(@Param("record") VehicleGps record, @Param("example") VehicleGpsExample example);

@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface VehicleGpsService {
     List<VehicleGps> listVehicleGps(String address, Date startDate, Date endDate);
+
+    List<VehicleGps> listVehicleGps(Integer speedLimit);
 }

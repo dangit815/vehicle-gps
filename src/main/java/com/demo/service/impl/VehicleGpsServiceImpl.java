@@ -8,6 +8,7 @@ import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -30,5 +31,13 @@ public class VehicleGpsServiceImpl implements VehicleGpsService {
             params.put("endDate", endDate);
         }
         return vehicleGpsMapper.selectByDateAndDiming(params);
+    }
+
+    public List<VehicleGps> listVehicleGps(Integer speedLimit) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        if (speedLimit != null) {
+            params.put("veo", speedLimit);
+        }
+        return vehicleGpsMapper.selectByVeo(params);
     }
 }
