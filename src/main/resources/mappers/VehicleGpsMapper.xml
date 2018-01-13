@@ -393,6 +393,18 @@
         </if>
         Limit 10000
     </select>
+    <select id="selectByCODE" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from vehicle_gps
+        WHERE 1
+        <if test="code != null">
+            AND CODE = #{code,jdbcType=VARCHAR} ORDER BY GPSTIME
+        </if>
+    </select>
     <select id="selectByGpstime" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <if test="distinct">
