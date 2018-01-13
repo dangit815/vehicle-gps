@@ -2,9 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>车辆报警</title>
-    <!--<meta name="keywords" content="城市三级联动,行政区划,省市区,区划代码,联动插件">-->
-    <!--<meta name="description" content="一套简单实用的行政区划选择插件，结合最新的省、市、区、街道数据；独立的数据包极大地方便了插件的更新和使用。">-->
+    <title>超速统计</title>
     <link rel="shortcut icon" href="public/image/favicon.png">
     <link rel="stylesheet" type="text/css" href="public/style/cssreset-min.css">
     <link rel="stylesheet" type="text/css" href="public/style/common.css">
@@ -155,13 +153,9 @@
             cursor: pointer;
             text-decoration: none;
         }
-
-        .mytable {
-            font-size: smaller;
-        }
     </style>
-    <script type="text/javascript" src="public/script/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="public/script/jquery.min.js"></script>
     <script type="text/javascript" src="code/jquery.citys.js"></script>
     <script type="text/javascript" src="js/echarts.min.js"></script>
     <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
@@ -190,8 +184,9 @@
                 <li><a href="./carspath.html"><span class="glyphicon glyphicon-file"></span>车辆轨迹</a>
                 <li><a href="./speed.html"><span class="glyphicon glyphicon-file"></span>速度监控</a></li>
                 <li><a href="./overspeed.html"><span class="glyphicon glyphicon-tree-deciduous"></span>超速区域</a></li>
-                <li><a href="./history.html"><span class="glyphicon glyphicon-file"></span>超速统计</a></li>
-                <li class="active"><a href="./alarm.html"><span class="glyphicon glyphicon-picture"></span>车辆报警</a></li>
+                <li class="active"></liclass><a href="./history.html"><span class="glyphicon glyphicon-file"></span>超速统计</a>
+                </li>
+                <li><a href="./alarm.html"><span class="glyphicon glyphicon-picture"></span>车辆报警</a></li>
             </ul>
         </div>
     </div>
@@ -206,7 +201,7 @@
 <div class="jumbotron">
     <div class="container">
         <blockquote>
-            <span>车辆报警</span>
+            <span>超速统计</span>
         </blockquote>
         <div class="col-md-12">
             <div class="alert alert-warning">
@@ -221,131 +216,149 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-12">&nbsp;</div>
-        <div style="width:100%;height: 600px">
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">您有一条新的报警通知</h4>
-                        </div>
-                        <div class="modal-body">
-                            您有一辆车辆处于报警情况，点击确定查看详情
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" onclick="myrefresh()">确定</button>
-                        </div>
+        <div class="main">
+            <div id="location" class="citys">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" style="color: black">速度限制:</label>
+                    <div class="col-md-2">
+                        <input type="number" id="speedLimit" name="speedLimit" class="form-control"
+                               placeholder="单位: km/h">
                     </div>
+                    <label class="col-md-2 control-label" style="color: black">统计区间:</label>
+                    <div class="col-md-2">
+                        <select id="type" name="type" class="form-control">
+                            <option value="1">年</option>
+                            <option value="2">季度</option>
+                            <option value="3">月</option>
+                        </select>
+                    </div>
+                    <button id="btn" type="submit" class="btn btn-primary btn-lg" onclick="search()">查询</button>
                 </div>
             </div>
-
-            <table class="table table-bordered mytable">
-                <thead>
-                <tr>
-                    <th>NID</th>
-                    <th>ID</th>
-                    <th>CODE</th>
-                    <th>GPSTIME</th>
-                    <th>LNG</th>
-                    <th>LAT</th>
-                    <th>AV</th>
-                    <th>VEO</th>
-                    <th>DIR</th>
-                    <th>DIS</th>
-                    <th>OFFSETLNG</th>
-                    <th>OFFSETLAT</th>
-                    <th>MOL0</th>
-                    <th>MOL1</th>
-                    <th>XHQD</th>
-                    <th>WXGS</th>
-                    <th>DIMING</th>
-                    <th>SIM</th>
-                    <th>STAT</th>
-                    <th>ALARM</th>
-                    <th>OIL</th>
-                    <th>CREATETIME</th>
-                </tr>
-                </thead>
-                <tbody id="tbody-result">
-                </tbody>
-            </table>
         </div>
-
-
+        <div class="col-md-12">&nbsp;</div>
+        <div id="container" style="width:100%;height: 600px"></div>
         <script type="text/javascript">
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+            var app = {};
+            app.title = '堆叠柱状图';
             var htmlobj = $.ajax({
-                url: "../notification/getall.do",
+                url: "../vehicle/history/list.do",
                 type: 'POST',
-                data: {},
+                data: {type: 1, speedLimit: 50},
                 datatype: "json",
-                success: function (data) {
-                    var result = JSON.parse(htmlobj.responseText);
-                    var str = "";
-                    var tbody = window.document.getElementById("tbody-result");
-                    for (var i in result) {
-                        str += "<tr>" +
-                                "<td>" + result[i].nid + "</td>" +
-                                "<td>" + result[i].id + "</td>" +
-                                "<td>" + result[i].code + "</td>" +
-                                "<td>" + result[i].gpstime + "</td>" +
-                                "<td>" + result[i].lng + "</td>" +
-                                "<td>" + result[i].lat + "</td>" +
-                                "<td>" + result[i].av + "</td>" +
-                                "<td>" + result[i].veo + "</td>" +
-                                "<td>" + result[i].dir + "</td>" +
-                                "<td>" + result[i].dis + "</td>" +
-                                "<td>" + result[i].offsetlng + "</td>" +
-                                "<td>" + result[i].offsetlat + "</td>" +
-                                "<td>" + result[i].mol0 + "</td>" +
-                                "<td>" + result[i].mol1 + "</td>" +
-                                "<td>" + result[i].xhqd + "</td>" +
-                                "<td>" + result[i].wxgs + "</td>" +
-                                "<td>" + result[i].diming + "</td>" +
-                                "<td>" + result[i].sim + "</td>" +
-                                "<td>" + result[i].stat + "</td>" +
-                                "<td>" + result[i].alarm + "</td>" +
-                                "<td>" + result[i].oil + "</td>" +
-                                "<td>" + result[i].createtime + "</td>" +
-                                "</tr>";
+                success: function (data, stats) {
+                    if (stats == "success") {
+                        var result = JSON.parse(htmlobj.responseText);
+                        var time = result.time;
+                        var over = result.over;
+                        var unover = result.unover;
+                        var option = {
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                                }
+                            },
+                            legend: {
+                                data: ['未超速', '超速']
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [
+                                {
+                                    type: 'category',
+                                    data: time
+                                }
+                            ],
+                            yAxis: [
+                                {
+                                    type: 'value'
+                                }
+                            ],
+                            series: [
+                                {
+                                    name: '未超速',
+                                    type: 'bar',
+                                    data: unover
+                                }, {
+                                    name: '超速',
+                                    type: 'bar',
+                                    data: over
+                                }]
+                        };
+                        myChart.setOption(option, true);
                     }
-                    tbody.innerHTML = str;
                 },
                 error: function (data) {
                     alert("请求失败");
                 }
             });
-
-            setInterval("check_notify()", 5000);
-            function check_notify() {
-                $.ajax({
-                    type: "POST",
-                    url: "../notification/checknotify.do",
+            function search() {
+                var htmlobj = $.ajax({
+                    url: "../vehicle/history/list.do",
+                    type: 'POST',
                     data: {
-                        NowMaxId: $("table tr:last td:first").text()
+                        type: $('#type').val(), speedLimit: $('#speedLimit').val()
                     },
                     datatype: "json",
-                    success: function (data) {
-                        var result = JSON.parse(data); //由JSON字符串转换为JSON对象
-                        if (result.msg == "success") {
-                            //alert(result.data.nid)
-                            $("#myModal").modal("show");
+                    success: function (data, stats) {
+                        if (stats == "success") {
+                            var result = JSON.parse(htmlobj.responseText);
+                            var time = result.time;
+                            var over = result.over;
+                            var unover = result.unover;
+                            var option = {
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                                    }
+                                },
+                                legend: {
+                                    data: ['未超速', '超速']
+                                },
+                                grid: {
+                                    left: '3%',
+                                    right: '4%',
+                                    bottom: '3%',
+                                    containLabel: true
+                                },
+                                xAxis: [
+                                    {
+                                        type: 'category',
+                                        data: time
+                                    }
+                                ],
+                                yAxis: [
+                                    {
+                                        type: 'value'
+                                    }
+                                ],
+                                series: [
+                                    {
+                                        name: '未超速',
+                                        type: 'bar',
+                                        data: unover
+                                    }, {
+                                        name: '超速',
+                                        type: 'bar',
+                                        data: over
+                                    }]
+                            };
+                            myChart.setOption(option, true);
                         }
-
                     },
                     error: function (data) {
-                        //alert("请求失败");
+                        alert("请求失败");
                     }
                 });
             }
-
-            function myrefresh() {
-                window.location.reload();
-            }
-
         </script>
     </div>
 </div>

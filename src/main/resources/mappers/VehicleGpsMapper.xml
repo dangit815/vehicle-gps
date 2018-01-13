@@ -412,10 +412,10 @@
         </if>
         <include refid="Base_Column_List"/>
         from vehicle_gps
-        WHERE 1
+        WHERE VEO <![CDATA[<>]]> 0
         <if test="gpstime != null">
             AND GPSTIME LIKE #{gpstime,jdbcType=VARCHAR}
         </if>
-        Limit 100
+        Limit 1000
     </select>
 </mapper>

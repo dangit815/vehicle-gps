@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import com.demo.dao.entity.VehicleGps;
+import com.demo.dto.input.HistoryParam;
 import com.demo.dto.input.SpeedParam;
 import com.demo.dto.input.TransportParam;
 import com.demo.dto.output.OverspeedDto;
@@ -13,10 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by wwwwei on 18/1/8.
@@ -83,24 +81,64 @@ public class VehicleGpsController {
         return overspeedDtos;
     }
 
-//    @RequestMapping(value = "/history/list.do")
-//    @ResponseBody
-//    public Object listHistoryOverSpeed(Integer type) throws ParseException {
-//        List<VehicleGps> vehicleGpses = null;
-//        switch (type) {
-//            case 1:
-//                vehicleGpses = vehicleGpsService.listVehicleGps("2016%");
-//                break;
-//            case 2:
-//                for (int i = 0; i < 4; i++) {
-//                    vehicleGpses = vehicleGpsService.listVehicleGps("2016");
-//                }
-//            case 3:
-//                for (int i = 1; i <= 12; i++) {
-//                    vehicleGpses = vehicleGpsService.listVehicleGps("2016-%" + i + '%');
-//                }
-//        }
-//return null;
-////        return overspeedDtos;
-//    }
+    @RequestMapping(value = "/history/list.do")
+    @ResponseBody
+    public Object listHistoryOverSpeed(HistoryParam historyParam) throws ParseException {
+        List<VehicleGps> vehicleGpses = null;
+        int overSpeedNum = 0;
+        List<Integer> overSpeed = new ArrayList<Integer>();
+        List<Integer> unOverSpeed = new ArrayList<Integer>();
+        List<String> time = new ArrayList<String>();
+        switch (historyParam.getType()) {
+            case 1:
+                vehicleGpses = vehicleGpsService.listVehicleGps("2016%");
+                overSpeedNum = 0;
+                for (VehicleGps vehicleGps : vehicleGpses) {
+                    if (vehicleGps.getVeo().compareTo(new BigDecimal(historyParam.getSpeedLimit())) == 1) {
+                        overSpeedNum++;
+                    }
+                }
+                overSpeed.add(overSpeedNum);
+                unOverSpeed.add(vehicleGpses.size() - overSpeedNum);
+                time.add("2016");
+                break;
+            case 2:
+                for (int i = 1; i <= 4; i++) {
+                    overSpeedNum = 0;
+                    int sumNum = 0;
+                    for (int j = 3 * i - 2; j <= i * 3; j++) {
+                        vehicleGpses = vehicleGpsService.listVehicleGps("2016-%" + j + '%');
+                        for (VehicleGps vehicleGps : vehicleGpses) {
+                            if (vehicleGps.getVeo().compareTo(new BigDecimal(historyParam.getSpeedLimit())) == 1) {
+                                overSpeedNum++;
+                            }
+                        }
+                        sumNum += vehicleGpses.size();
+                    }
+                    overSpeed.add(overSpeedNum);
+                    unOverSpeed.add(sumNum - overSpeedNum);
+                    time.add("第" + i + "季度");
+                }
+                break;
+            case 3:
+                for (int i = 1; i <= 12; i++) {
+                    vehicleGpses = vehicleGpsService.listVehicleGps("2016-%" + i + '%');
+                    overSpeedNum = 0;
+                    for (VehicleGps vehicleGps : vehicleGpses) {
+                        if (vehicleGps.getVeo().compareTo(new BigDecimal(historyParam.getSpeedLimit())) == 1) {
+                            overSpeedNum++;
+                        }
+                    }
+                    overSpeed.add(overSpeedNum);
+                    unOverSpeed.add(vehicleGpses.size() - overSpeedNum);
+                    time.add("第" + i + "月");
+                }
+                break;
+        }
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("over", overSpeed);
+        result.put("unover", unOverSpeed);
+        result.put("time", time);
+        return result;
+    }
 }
